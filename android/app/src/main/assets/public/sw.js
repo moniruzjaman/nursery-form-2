@@ -78,16 +78,19 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
+    "url": "legacy-nursery.html",
+    "revision": "f8ddc60b05359a553e53aeca98dd2113"
+  }, {
     "url": "index.html",
-    "revision": "a43ac547ddb05080755671e36d1bb96b"
+    "revision": "0178a16066854ec3a0f7d672ff11abbe"
   }, {
     "url": "assets/workbox-window.prod.es5-BIl4cyR9.js",
     "revision": null
   }, {
-    "url": "assets/index-D988IvxR.js",
+    "url": "assets/index-D7g4Hiz_.css",
     "revision": null
   }, {
-    "url": "assets/index-CTOFzKTB.css",
+    "url": "assets/index-BVI6AC7f.js",
     "revision": null
   }, {
     "url": "pwa-192x192.svg",
