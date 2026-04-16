@@ -401,13 +401,6 @@
                     <button type="button" class="btn-add" onclick="addSeedling('medicinal')">+ ঔষধি চারা যোগ করুন</button>
                 </div>
 
-                <!-- Section 5: Wild Seedlings -->
-                <div class="section">
-                    <div class="section-title">৫. বন্য চারা</div>
-                    <div id="wildSeedlings"></div>
-                    <button type="button" class="btn-add" onclick="addSeedling('wild')">+ বন্য চারা যোগ করুন</button>
-                </div>
-
                 <button type="submit" class="btn-submit" id="submitBtn">তথ্য জমা দিন 📤</button>
 
                 <div id="status" class="status"></div>
@@ -435,8 +428,7 @@
         let seedlingCounters = {
             fruit: 0,
             forest: 0,
-            medicinal: 0,
-            wild: 0
+            medicinal: 0
         };
 
         // Check online status
@@ -554,12 +546,11 @@
                 address: document.getElementById('address').value,
                 fruitSeedlings: [],
                 forestSeedlings: [],
-                medicinalSeedlings: [],
-                wildSeedlings: []
+                medicinalSeedlings: []
             };
 
             // Collect seedlings data
-            ['fruit', 'forest', 'medicinal', 'wild'].forEach(type => {
+            ['fruit', 'forest', 'medicinal'].forEach(type => {
                 const container = document.getElementById(type + 'Seedlings');
                 const sections = container.getElementsByClassName('seedling-section');
 
@@ -696,7 +687,7 @@
                     showStatus('তথ্য সফলভাবে জমা হয়েছে! ✅', 'success');
                     document.getElementById('nurseryForm').reset();
                     // Clear seedlings
-                    ['fruit', 'forest', 'medicinal', 'wild'].forEach(type => {
+                    ['fruit', 'forest', 'medicinal'].forEach(type => {
                         document.getElementById(type + 'Seedlings').innerHTML = '';
                         seedlingCounters[type] = 0;
                     });
@@ -704,7 +695,6 @@
                     addSeedling('fruit');
                     addSeedling('forest');
                     addSeedling('medicinal');
-                    addSeedling('wild');
                 } else {
                     // Save to local storage if online submission fails
                     saveToLocalStorage(formData);
@@ -728,7 +718,6 @@
             addSeedling('fruit');
             addSeedling('forest');
             addSeedling('medicinal');
-            addSeedling('wild');
         };
     </script>
 </body>
