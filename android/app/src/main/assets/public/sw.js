@@ -79,7 +79,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "legacy-nursery.html",
-    "revision": "0e29880ad300eead20a134b220b70a0e"
+    "revision": "06e21d0f97fb1a94bc3829ef8d342c98"
   }, {
     "url": "index.html",
     "revision": "262ac6921179b098f7358bab822e52d1"

@@ -70,7 +70,7 @@ tbody tr{border-bottom:1px solid #e5e7eb}
 <div class="nav-dot"></div>
 </button>
 <button onclick="switchTab('storedData')" class="nav-btn flex-1 py-3.5 text-sm font-semibold text-gray-500 hover:text-green-700 hover:bg-green-50 flex flex-col items-center gap-1" data-tab="storedData">
-<span class="text-lg">📂</span>সংরক্ষিত তথ্য
+<span class="text-lg">📂</span>রিপোর্ট
 <div class="nav-dot"></div>
 </button>
 <button onclick="switchTab('admin')" class="nav-btn flex-1 py-3.5 text-sm font-semibold text-gray-500 hover:text-green-700 hover:bg-green-50 flex flex-col items-center gap-1" data-tab="admin">
@@ -91,7 +91,7 @@ tbody tr{border-bottom:1px solid #e5e7eb}
 <div class="nav-dot mt-0.5"></div>
 </button>
 <button onclick="switchTab('storedData')" class="nav-btn flex-1 py-2.5 flex flex-col items-center gap-0.5 text-gray-400" data-tab="storedData">
-<span class="text-xl">📂</span><span class="text-xs font-semibold" style="font-size:10px">আমার তথ্য</span>
+<span class="text-xl">📂</span><span class="text-xs font-semibold" style="font-size:10px">রিপোর্ট</span>
 <div class="nav-dot mt-0.5"></div>
 </button>
 <button onclick="switchTab('admin')" class="nav-btn flex-1 py-2.5 flex flex-col items-center gap-0.5 text-gray-400" data-tab="admin">
@@ -224,20 +224,12 @@ tbody tr{border-bottom:1px solid #e5e7eb}
 
 <!-- ========== TAB: ADMIN ========== -->
 <section id="tab-admin" class="tab-content hidden">
-<div id="adminLogin" class="max-w-sm mx-auto bg-white rounded-xl shadow p-6 mt-8">
-<div class="text-center mb-4"><span class="text-4xl">🔐</span><h2 class="text-lg font-bold text-green-700 mt-2">এডমিন লগইন</h2></div>
-<div class="space-y-3">
-<input type="password" id="adminPass" placeholder="পাসওয়ার্ড দিন" class="w-full border rounded-md px-3 py-2.5 text-sm focus:ring-2 focus:ring-green-400 outline-none" style="border-color:#d1d5db" onkeydown="if(event.key==='Enter')adminLogin()">
-<p id="adminLoginErr" class="hidden text-xs" style="color:#ef4444">ভুল পাসওয়ার্ড!</p>
-<button onclick="adminLogin()" class="w-full text-white py-2.5 rounded-lg font-semibold text-sm transition" style="background:#15803d">লগইন করুন</button>
-</div>
-</div>
-<div id="adminPanel" class="hidden">
+
+<div id="adminPanel">
 <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
-<div class="flex items-center gap-2"><span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:#dcfce7;color:#166534">✅ এডমিন</span><button onclick="changePassword()" class="text-xs underline" style="color:#2563eb">পাসওয়ার্ড পরিবর্তন</button></div>
+<div class="flex items-center gap-2"><span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:#dcfce7;color:#166534">✅ এডমিন</span></div>
 <div class="flex gap-2">
 <button onclick="exportToExcel('admin')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold transition" style="background:#15803d">📥 Excel</button>
-<button onclick="adminLogout()" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold transition" style="background:#dc2626">🚪 লগআউট</button>
 </div>
 </div>
 <div class="bg-white rounded-xl shadow p-3 mb-4">
@@ -407,7 +399,7 @@ if(sec)sec.classList.remove("hidden");
 document.querySelectorAll('.nav-btn[data-tab="'+tab+'"]').forEach(function(b){b.classList.add("active")});
 hideBanner("successBanner");hideBanner("errorBanner");
 if(tab==="dashboard")renderDashboard();
-if(tab==="admin"&&isAdmin)renderAdminTable();
+if(tab==="admin")renderAdminTable();
 window.scrollTo({top:0,behavior:"smooth"});
 }catch(err){console.error("Tab switch error:",err)}
 };
@@ -599,11 +591,8 @@ var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"নার্স
 };
 
 // ── Admin ──
-window.adminLogin=function(){if(document.getElementById("adminPass").value===getAdminPw()){isAdmin=true;document.getElementById("adminLogin").classList.add("hidden");document.getElementById("adminPanel").classList.remove("hidden");document.getElementById("adminLoginErr").classList.add("hidden");renderAdminTable();populateRegionDD(document.getElementById("adminRegion"))}else document.getElementById("adminLoginErr").classList.remove("hidden")};
-window.adminLogout=function(){isAdmin=false;document.getElementById("adminLogin").classList.remove("hidden");document.getElementById("adminPanel").classList.add("hidden");document.getElementById("adminPass").value=""};
-window.changePassword=function(){var np=prompt("নতুন পাসওয়ার্ড দিন:");if(np&&np.trim().length>=4){setAdminPw(np.trim());showBanner("successBanner","পাসওয়ার্ড পরিবর্তন হয়েছে!");setTimeout(function(){hideBanner("successBanner")},3000)}else if(np)showBanner("errorBanner","পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে।")};
 window.renderAdminTable=function(){
-if(!isAdmin)return;var subs=getFiltered("admin"),tb=document.getElementById("adminTableBody"),nd=document.getElementById("adminNoData");
+var subs=getFiltered("admin"),tb=document.getElementById("adminTableBody"),nd=document.getElementById("adminNoData");
 if(!subs.length){tb.innerHTML="";nd.classList.remove("hidden");return}nd.classList.add("hidden");
 tb.innerHTML=subs.map(function(s,i){var c=countSeedlings(s),t=c.fruit+c.forest+c.medicinal;return '<tr class="border-b"><td class="px-2 py-2">'+(i+1).toLocaleString("bn-BD")+'</td><td class="px-2 py-2">'+s.region+'</td><td class="px-2 py-2">'+s.district+'</td><td class="px-2 py-2">'+s.upazila+'</td><td class="px-2 py-2">'+s.nurseryName+'</td><td class="px-2 py-2">'+s.mobile+'</td><td class="px-2 py-2 font-semibold">'+t+'</td><td class="px-2 py-2 text-gray-400 text-xs">'+new Date(s.submittedAt).toLocaleDateString("bn-BD")+'</td><td class="px-2 py-2 text-center whitespace-nowrap"><button onclick="adminEdit(\''+s.id+'\')" style="background:#dbeafe;color:#1d4ed8;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;border:none;cursor:pointer;margin-right:4px">✏️</button><button onclick="adminDelete(\''+s.id+'\')" style="background:#fee2e2;color:#b91c1c;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;border:none;cursor:pointer">🗑️</button></td></tr>'}).join("");
 };
