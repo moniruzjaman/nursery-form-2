@@ -1,6 +1,8 @@
 {
   "name": "Nursery_kurigram",
   "description": "",
-  "requestFramePermissions": [],
+  "requestFramePermissions": [
+    "geolocation"
+  ],
   "majorCapabilities": []
 }

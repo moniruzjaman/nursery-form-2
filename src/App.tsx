@@ -5,11 +5,12 @@
 
 export default function App() {
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
       <iframe 
         src="legacy-nursery.html" 
-        style={{ width: '100%', height: '100%', border: 'none' }}
+        style={{ display: 'block', width: '100%', height: '100%', border: 'none' }}
         title="Nursery Form" 
+        allow="geolocation"
       />
     </div>
   );
